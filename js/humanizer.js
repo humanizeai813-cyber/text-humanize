@@ -83,18 +83,75 @@ level: radioValue('level') || 'balanced',
 purpose: (purposeEl && purposeEl.value) || 'general'
 };
 }
+var personaPills = tool.querySelectorAll('.persona-pill');
+
+function updatePersonaPills(activePreset) {
+  personaPills.forEach(function (pill) {
+    var match = pill.getAttribute('data-preset') === activePreset;
+    pill.classList.toggle('active', match);
+    pill.setAttribute('aria-selected', String(match));
+  });
+}
+
+function applyPersonaPreset(presetKey) {
+  updatePersonaPills(presetKey);
+
+  if (presetKey === 'academic') {
+    setRadio('tone', 'academic');
+    setRadio('level', 'balanced');
+    if (purposeEl) purposeEl.value = 'academic';
+  } else if (presetKey === 'professional') {
+    setRadio('tone', 'professional');
+    setRadio('level', 'balanced');
+    if (purposeEl) purposeEl.value = 'email';
+  } else if (presetKey === 'creative') {
+    setRadio('tone', 'creative');
+    setRadio('level', 'balanced');
+    if (purposeEl) purposeEl.value = 'blog';
+  } else if (presetKey === 'aggressive') {
+    setRadio('tone', 'natural');
+    setRadio('level', 'aggressive');
+    if (purposeEl) purposeEl.value = 'essay';
+  }
+  save(SETTINGS_KEY, currentSettings());
+}
+
+personaPills.forEach(function (pill) {
+  pill.addEventListener('click', function () {
+    var preset = pill.getAttribute('data-preset');
+    if (preset) applyPersonaPreset(preset);
+  });
+});
+
 (function restoreSettings() {
 var s = load(SETTINGS_KEY, null);
-if (!s) return;
+if (!s) {
+  applyPersonaPreset('academic');
+  return;
+}
 if (s.tone) setRadio('tone', s.tone);
 if (s.level) setRadio('level', s.level);
 if (purposeEl && s.purpose) {
 purposeEl.value = s.purpose;
-if (!purposeEl.value) purposeEl.value = 'general';
+if (!purposeEl.value) purposeEl.value = 'academic';
 }
+if (s.purpose === 'academic' || s.tone === 'academic') updatePersonaPills('academic');
+else if (s.purpose === 'email' || s.tone === 'professional') updatePersonaPills('professional');
+else if (s.purpose === 'blog' || s.tone === 'creative') updatePersonaPills('creative');
+else if (s.level === 'aggressive') updatePersonaPills('aggressive');
+else updatePersonaPills(null);
 })();
 tool.addEventListener('change', function (e) {
-if (e.target.name === 'tone' || e.target.name === 'level' || e.target === purposeEl) save(SETTINGS_KEY, currentSettings());
+if (e.target.name === 'tone' || e.target.name === 'level' || e.target === purposeEl) {
+  var t = radioValue('tone');
+  var l = radioValue('level');
+  if (t === 'academic' && l === 'balanced') updatePersonaPills('academic');
+  else if (t === 'professional' && l === 'balanced') updatePersonaPills('professional');
+  else if (t === 'creative' && l === 'balanced') updatePersonaPills('creative');
+  else if (l === 'aggressive') updatePersonaPills('aggressive');
+  else updatePersonaPills(null);
+  save(SETTINGS_KEY, currentSettings());
+}
 });
 function setNotice(kind, message, tag) {
 notice.className = 'tool-notice alert alert-' + kind;

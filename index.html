@@ -28,11 +28,11 @@
 <link rel="alternate" type="application/rss+xml" title="Text Humanize guides" href="/blog/feed.xml">
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
-<link rel="stylesheet" href="/css/site.css?v=20261122c">
+<link rel="stylesheet" href="/css/site.css?v=20261122d">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO","PL","PT","RO","SK","SI","ES","SE","GB","CH"],wait_for_update:500});gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});(function(){try{var c=localStorage.getItem('th_consent');if(c){var v=c==='granted'?'granted':'denied';gtag('consent','update',{ad_storage:v,ad_user_data:v,ad_personalization:v,analytics_storage:v});if(v==='denied'){(window.adsbygoogle=window.adsbygoogle||[]).requestNonPersonalizedAds=1}}}catch(e){}})();gtag('js',new Date());gtag('config',"G-X853TWS76V");</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1465507623368232" crossorigin="anonymous"></script>
 <script src="/js/core.js?v=44cc3387ab" defer></script>
-<script src="/js/humanizer.js?v=20261122c" defer></script>
+<script src="/js/humanizer.js?v=20261122d" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://text-humanize.com/#website","name":"Text Humanize","url":"https://text-humanize.com/","inLanguage":"en","publisher":{"@id":"https://text-humanize.com/#organization"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://text-humanize.com/#organization","name":"Text Humanize","url":"https://text-humanize.com/","logo":{"@type":"ImageObject","url":"https://text-humanize.com/images/logo-512.png","width":512,"height":512},"email":"hello@text-humanize.com","contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"hello@text-humanize.com","availableLanguage":["English"]}],"sameAs":["https://x.com/humanizeai87005"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Text Humanize AI Humanizer","url":"https://text-humanize.com/","description":"Paste an AI-assisted draft and get a clearer, more natural rewrite in seconds. Pick a tone, keep your facts intact and compare every change. Free, no sign-up.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","inLanguage":"en","isAccessibleForFree":true,"featureList":["Rewrite AI-assisted text in five tones","Protects numbers, names, links and citations","Word-by-word comparison of every change","AI writing-pattern checker"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@id":"https://text-humanize.com/#organization"}}</script>
@@ -65,37 +65,62 @@
 
     <div class="tool" id="tool">
       <div class="tool-bar">
-        <div class="field" role="radiogroup" aria-labelledby="tone-label">
-          <span class="field-label" id="tone-label">Tone</span>
-          <div class="segmented">
-            <input type="radio" name="tone" id="tone-natural" value="natural" checked><label for="tone-natural">Natural</label>
-            <input type="radio" name="tone" id="tone-casual" value="casual"><label for="tone-casual">Casual</label>
-            <input type="radio" name="tone" id="tone-professional" value="professional"><label for="tone-professional">Professional</label>
-            <input type="radio" name="tone" id="tone-academic" value="academic"><label for="tone-academic">Academic</label>
-            <input type="radio" name="tone" id="tone-creative" value="creative"><label for="tone-creative">Creative</label>
+        <div class="persona-section">
+          <span class="persona-section-label">One-Click Persona:</span>
+          <div class="persona-pills" role="tablist" aria-label="One-click writing personas">
+            <button type="button" class="persona-pill active" data-preset="academic" role="tab" aria-selected="true" title="Optimized for research papers & Turnitin flow">
+              <span class="persona-icon">🎓</span>
+              <div class="persona-text">
+                <span class="persona-title">Academic / Student</span>
+                <span class="persona-tag">Research & Turnitin Flow</span>
+              </div>
+            </button>
+            <button type="button" class="persona-pill" data-preset="professional" role="tab" aria-selected="false" title="Tone tailored for emails and reports">
+              <span class="persona-icon">💼</span>
+              <div class="persona-text">
+                <span class="persona-title">Professional / Corporate</span>
+                <span class="persona-tag">Work Emails & Reports</span>
+              </div>
+            </button>
+            <button type="button" class="persona-pill" data-preset="creative" role="tab" aria-selected="false" title="Natural blog & essay cadence">
+              <span class="persona-icon">✍️</span>
+              <div class="persona-text">
+                <span class="persona-title">Creative / Conversational</span>
+                <span class="persona-tag">Natural Blog & Essay</span>
+              </div>
+            </button>
+            <button type="button" class="persona-pill" data-preset="aggressive" role="tab" aria-selected="false" title="Maximum sentence structure diversification">
+              <span class="persona-icon">⚡</span>
+              <div class="persona-text">
+                <span class="persona-title">Aggressive / 100% Bypass</span>
+                <span class="persona-tag">Max Structural Variation</span>
+              </div>
+            </button>
           </div>
         </div>
-        <div class="field" role="radiogroup" aria-labelledby="level-label">
-          <span class="field-label" id="level-label">Changes</span>
-          <div class="segmented">
-            <input type="radio" name="level" id="level-light" value="light"><label for="level-light">Light</label>
-            <input type="radio" name="level" id="level-balanced" value="balanced" checked><label for="level-balanced">Balanced</label>
-            <input type="radio" name="level" id="level-aggressive" value="aggressive"><label for="level-aggressive">Strong</label>
+        <input type="hidden" id="tool-purpose" value="academic">
+
+        <div class="tool-bar-sub">
+          <div class="field" role="radiogroup" aria-labelledby="tone-label">
+            <span class="field-label" id="tone-label">Tone</span>
+            <div class="segmented">
+              <input type="radio" name="tone" id="tone-academic" value="academic" checked><label for="tone-academic">Academic</label>
+              <input type="radio" name="tone" id="tone-natural" value="natural"><label for="tone-natural">Natural</label>
+              <input type="radio" name="tone" id="tone-casual" value="casual"><label for="tone-casual">Casual</label>
+              <input type="radio" name="tone" id="tone-professional" value="professional"><label for="tone-professional">Professional</label>
+              <input type="radio" name="tone" id="tone-creative" value="creative"><label for="tone-creative">Creative</label>
+            </div>
           </div>
+          <div class="field" role="radiogroup" aria-labelledby="level-label">
+            <span class="field-label" id="level-label">Strength</span>
+            <div class="segmented">
+              <input type="radio" name="level" id="level-light" value="light"><label for="level-light">Light</label>
+              <input type="radio" name="level" id="level-balanced" value="balanced" checked><label for="level-balanced">Balanced</label>
+              <input type="radio" name="level" id="level-aggressive" value="aggressive"><label for="level-aggressive">Strong</label>
+            </div>
+          </div>
+          <button type="button" class="link-btn tool-history" id="tool-history" aria-haspopup="dialog"><svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History <span class="count-badge" id="history-count" hidden>0</span></button>
         </div>
-        <div class="field">
-          <label class="field-label" for="tool-purpose">Writing for</label>
-          <select class="select" id="tool-purpose">
-            <option value="general">General</option>
-            <option value="email">Email</option>
-            <option value="blog">Blog post</option>
-            <option value="essay">Essay</option>
-            <option value="academic">Research writing</option>
-            <option value="social">Social post</option>
-            <option value="cover_letter">Cover letter</option>
-          </select>
-        </div>
-        <button type="button" class="link-btn tool-history" id="tool-history" aria-haspopup="dialog"><svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>History <span class="count-badge" id="history-count" hidden>0</span></button>
       </div>
 
       <div class="tool-panes">

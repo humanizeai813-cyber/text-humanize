@@ -316,3 +316,104 @@
   background: #10b981;
   flex-shrink: 0;
 }
+
+/* ==========================================================================
+   One-Click Persona Presets
+   ========================================================================== */
+.persona-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: 100%;
+}
+.persona-section-label {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.persona-pills {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+}
+@media (max-width: 900px) {
+  .persona-pills {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 520px) {
+  .persona-pills {
+    grid-template-columns: 1fr;
+  }
+}
+.persona-pill {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: #ffffff;
+  border: 1.5px solid var(--line);
+  color: var(--ink-2);
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+  text-align: left;
+  user-select: none;
+  font-family: inherit;
+  box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+}
+.persona-pill:hover {
+  border-color: var(--brand-soft-2);
+  background: var(--bg-soft);
+  color: var(--ink);
+  transform: translateY(-1px);
+}
+.persona-pill.active {
+  border-color: var(--brand);
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  box-shadow: 0 2px 8px rgba(35, 85, 232, 0.18);
+}
+.persona-icon {
+  font-size: 1.25rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.persona-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  line-height: 1.25;
+}
+.persona-title {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.persona-tag {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.persona-pill.active .persona-tag {
+  color: var(--brand-ink);
+  opacity: 0.85;
+}
+.tool-bar-sub {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 20px;
+  width: 100%;
+  padding-top: 10px;
+  border-top: 1px dashed var(--line);
+}
+.tool-bar-sub .tool-history {
+  margin-left: auto;
+}
