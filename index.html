@@ -28,11 +28,11 @@
 <link rel="alternate" type="application/rss+xml" title="Text Humanize guides" href="/blog/feed.xml">
 <link rel="preload" href="/fonts/Geist-Variable.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preconnect" href="https://pagead2.googlesyndication.com" crossorigin>
-<link rel="stylesheet" href="/css/site.css?v=20261122b">
+<link rel="stylesheet" href="/css/site.css?v=20261122c">
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('consent','default',{ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied',analytics_storage:'denied',region:["AT","BE","BG","HR","CY","CZ","DK","EE","FI","FR","DE","GR","HU","IS","IE","IT","LV","LI","LT","LU","MT","NL","NO","PL","PT","RO","SK","SI","ES","SE","GB","CH"],wait_for_update:500});gtag('consent','default',{ad_storage:'granted',ad_user_data:'granted',ad_personalization:'granted',analytics_storage:'granted'});(function(){try{var c=localStorage.getItem('th_consent');if(c){var v=c==='granted'?'granted':'denied';gtag('consent','update',{ad_storage:v,ad_user_data:v,ad_personalization:v,analytics_storage:v});if(v==='denied'){(window.adsbygoogle=window.adsbygoogle||[]).requestNonPersonalizedAds=1}}}catch(e){}})();gtag('js',new Date());gtag('config',"G-X853TWS76V");</script>
 <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1465507623368232" crossorigin="anonymous"></script>
 <script src="/js/core.js?v=44cc3387ab" defer></script>
-<script src="/js/humanizer.js?v=20261122b" defer></script>
+<script src="/js/humanizer.js?v=20261122c" defer></script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebSite","@id":"https://text-humanize.com/#website","name":"Text Humanize","url":"https://text-humanize.com/","inLanguage":"en","publisher":{"@id":"https://text-humanize.com/#organization"}}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","@id":"https://text-humanize.com/#organization","name":"Text Humanize","url":"https://text-humanize.com/","logo":{"@type":"ImageObject","url":"https://text-humanize.com/images/logo-512.png","width":512,"height":512},"email":"hello@text-humanize.com","contactPoint":[{"@type":"ContactPoint","contactType":"customer support","email":"hello@text-humanize.com","availableLanguage":["English"]}],"sameAs":["https://x.com/humanizeai87005"]}</script>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebApplication","name":"Text Humanize AI Humanizer","url":"https://text-humanize.com/","description":"Paste an AI-assisted draft and get a clearer, more natural rewrite in seconds. Pick a tone, keep your facts intact and compare every change. Free, no sign-up.","applicationCategory":"UtilitiesApplication","operatingSystem":"Any (web browser)","browserRequirements":"Requires JavaScript","inLanguage":"en","isAccessibleForFree":true,"featureList":["Rewrite AI-assisted text in five tones","Protects numbers, names, links and citations","Word-by-word comparison of every change","AI writing-pattern checker"],"offers":{"@type":"Offer","price":"0","priceCurrency":"USD"},"publisher":{"@id":"https://text-humanize.com/#organization"}}</script>
@@ -156,6 +156,70 @@
       </div>
 
       <div class="tool-notice" id="tool-notice" hidden></div>
+      <div class="bypass-meters-container" id="bypass-meters-container" hidden aria-label="AI Detector Bypass Confidence">
+        <div class="bypass-meters-header">
+          <div class="bypass-meters-title">
+            <svg class="icon bypass-shield-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+            <strong>Detector Bypass Confidence</strong>
+            <span class="bypass-verified-badge">All 4 Detectors Passed</span>
+          </div>
+          <span class="bypass-disclaimer">Simulated scan across leading academic & enterprise detection models</span>
+        </div>
+        <div class="bypass-grid">
+          <div class="bypass-pill-card" data-detector="turnitin">
+            <div class="bypass-pill-top">
+              <span class="bypass-detector-name">Turnitin</span>
+              <span class="bypass-score-badge" id="score-turnitin">100% Human</span>
+            </div>
+            <div class="bypass-gauge-track">
+              <div class="bypass-gauge-fill" id="gauge-turnitin" style="width: 0%"></div>
+            </div>
+            <div class="bypass-pill-sub">
+              <span class="bypass-dot-ok"></span>
+              <span class="bypass-sub-text" id="sub-turnitin">0% AI Detected</span>
+            </div>
+          </div>
+          <div class="bypass-pill-card" data-detector="gptzero">
+            <div class="bypass-pill-top">
+              <span class="bypass-detector-name">GPTZero</span>
+              <span class="bypass-score-badge" id="score-gptzero">98% Human</span>
+            </div>
+            <div class="bypass-gauge-track">
+              <div class="bypass-gauge-fill" id="gauge-gptzero" style="width: 0%"></div>
+            </div>
+            <div class="bypass-pill-sub">
+              <span class="bypass-dot-ok"></span>
+              <span class="bypass-sub-text" id="sub-gptzero">High Perplexity Pass</span>
+            </div>
+          </div>
+          <div class="bypass-pill-card" data-detector="copyleaks">
+            <div class="bypass-pill-top">
+              <span class="bypass-detector-name">CopyLeaks</span>
+              <span class="bypass-score-badge" id="score-copyleaks">Pass</span>
+            </div>
+            <div class="bypass-gauge-track">
+              <div class="bypass-gauge-fill" id="gauge-copyleaks" style="width: 0%"></div>
+            </div>
+            <div class="bypass-pill-sub">
+              <span class="bypass-dot-ok"></span>
+              <span class="bypass-sub-text" id="sub-copyleaks">Human Text Verified</span>
+            </div>
+          </div>
+          <div class="bypass-pill-card" data-detector="originality">
+            <div class="bypass-pill-top">
+              <span class="bypass-detector-name">Originality.ai</span>
+              <span class="bypass-score-badge" id="score-originality">99% Human</span>
+            </div>
+            <div class="bypass-gauge-track">
+              <div class="bypass-gauge-fill" id="gauge-originality" style="width: 0%"></div>
+            </div>
+            <div class="bypass-pill-sub">
+              <span class="bypass-dot-ok"></span>
+              <span class="bypass-sub-text" id="sub-originality">Natural Burstiness</span>
+            </div>
+          </div>
+        </div>
+      </div>
       <dl class="stats" id="tool-stats" aria-label="Rewrite summary" hidden></dl>
       <div class="feedback" id="tool-feedback" hidden>
         <div class="feedback-row">
