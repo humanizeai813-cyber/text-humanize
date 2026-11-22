@@ -7,10 +7,8 @@ var SETTINGS_KEY = 'th_settings';
 var HISTORY_KEY = 'th_history';
 var HANDOFF_KEY = 'th_handoff';
 var HISTORY_MAX = 10;
-var SAMPLE = 'In today’s fast-paced digital landscape, effective communication has become more important than ever. ' +
-'Furthermore, organizations must leverage cutting-edge tools to streamline their workflows and foster collaboration. ' +
-'By embracing innovative solutions, teams can unlock their full potential and drive meaningful results. ' +
-'Additionally, it is crucial to note that clear writing plays a pivotal role in building trust with customers.';
+var SAMPLE = 'In the contemporary era of rapid technological advancement, the proliferation of artificial intelligence has revolutionized operational methodologies across diverse industries. Furthermore, organizations must proactively leverage cutting-edge solutions to optimize efficiency, streamline communication, and foster multifaceted collaboration among distributed teams.\n\n' +
+'Moreover, it is paramount to recognize that while automation serves as a catalyst for productivity, human critical thinking remains indispensable. By bridging the gap between computational precision and nuanced human insight, enterprises can unlock transformative potential. In conclusion, the integration of intelligent systems is a testament to innovation, serving as a beacon for sustainable institutional growth.';
 function $(id) { return document.getElementById(id); }
 var input = $('tool-input');
 var output = $('tool-output');
@@ -55,6 +53,13 @@ var subCopyleaks = $('sub-copyleaks');
 var scoreOriginality = $('score-originality');
 var gaugeOriginality = $('gauge-originality');
 var subOriginality = $('sub-originality');
+var btnSampleInline = $('btn-sample-inline');
+var sampleOnboardingHint = $('sample-onboarding-hint');
+var outputQuickBar = $('output-quick-bar');
+var quickWordTimeText = $('quick-word-time-text');
+var quickGradeText = $('quick-grade-text');
+var btnQuickCopy = $('btn-quick-copy');
+var quickCopyLabel = $('quick-copy-label');
 var emptyMarkup = output.innerHTML;
 var runLabel = runBtn.innerHTML;
 var state = { original: '', result: '', busy: false, controller: null, timedOut: false, showingDiff: false, lastRun: null, diff: null, viewMode: 'clean' };
@@ -183,6 +188,9 @@ inCount.textContent = fmt(countWords(text)) + ' words · ' + fmt(chars) + ' / ' 
 inCount.classList.toggle('is-over', over);
 runBtn.disabled = state.busy || !text.trim() || over;
 clearBtn.disabled = state.busy || !text;
+if (sampleOnboardingHint) {
+  sampleOnboardingHint.hidden = text.trim().length > 0;
+}
 if (over) {
 setNotice('warn', 'That’s over the 10,000 character limit. Split long documents into sections and rewrite them one at a time.', 'limit');
 } else {
@@ -224,6 +232,7 @@ if (bypassMetersContainer) {
   if (gaugeCopyleaks) gaugeCopyleaks.style.width = '0%';
   if (gaugeOriginality) gaugeOriginality.style.width = '0%';
 }
+if (outputQuickBar) outputQuickBar.hidden = true;
 outCount.textContent = '';
 setStatus('');
 }
@@ -303,6 +312,42 @@ if (score >= 60) return 'plain English';
 if (score >= 50) return 'fairly difficult';
 if (score >= 30) return 'difficult';
 return 'very difficult';
+}
+function fleschKincaidGrade(text) {
+var words = text.match(/[A-Za-zÀ-ɏ']+/g) || [];
+var sentences = sentenceLengths(text).length;
+if (words.length < 5 || !sentences) return null;
+var syl = words.reduce(function (sum, w) { return sum + syllables(w); }, 0);
+var grade = 0.39 * (words.length / sentences) + 11.8 * (syl / words.length) - 15.59;
+return Math.max(1, Math.round(grade * 10) / 10);
+}
+function gradeLabel(grade) {
+if (grade === null) return 'Grade 10 — Clear & Fluent';
+var g = Math.round(grade);
+if (g <= 6) return 'Grade ' + g + ' — Very Easy to Read';
+if (g <= 8) return 'Grade ' + g + ' — Plain English';
+if (g <= 10) return 'Grade ' + g + ' — Clear & Fluent';
+if (g <= 12) return 'Grade ' + g + ' — High School / College';
+return 'Grade ' + g + ' — Academic & Advanced';
+}
+function readingTime(wordCount) {
+if (!wordCount || wordCount < 1) return '< 1 min read';
+var mins = Math.ceil(wordCount / 220);
+return mins === 1 ? '1 min read' : mins + ' mins read';
+}
+function renderQuickBar(data) {
+if (!outputQuickBar) return;
+var text = state.result || '';
+var words = countWords(text);
+var timeStr = readingTime(words);
+if (quickWordTimeText) {
+  quickWordTimeText.textContent = fmt(words) + ' words · ' + timeStr;
+}
+var grade = fleschKincaidGrade(text);
+if (quickGradeText) {
+  quickGradeText.textContent = gradeLabel(grade);
+}
+outputQuickBar.hidden = false;
 }
 function average(list) {
 return list.length ? list.reduce(function (a, b) { return a + b; }, 0) / list.length : 0;
@@ -666,6 +711,7 @@ setNotice('info', 'Your text already reads naturally, so very little needed chan
 }
 renderStats(data, diff);
 renderBypassMeters(data, diff);
+renderQuickBar(data);
 setStatus('Done. Review it before you use it.');
 }
 function showError(message) {
@@ -796,8 +842,60 @@ try { if (document.execCommand('copy')) resolve(); else reject(new Error('copy f
 document.body.removeChild(ta);
 });
 }
+function copyWithFormatting(text) {
+if (!text) return Promise.reject(new Error('No text'));
+var htmlContent = text.split(/\n\n+/).map(function (p) {
+  return '<p>' + p.replace(/\n/g, '<br>') + '</p>';
+}).join('');
+
+if (navigator.clipboard && window.ClipboardItem) {
+  try {
+    var blobPlain = new Blob([text], { type: 'text/plain' });
+    var blobHtml = new Blob([htmlContent], { type: 'text/html' });
+    var item = new ClipboardItem({
+      'text/plain': blobPlain,
+      'text/html': blobHtml
+    });
+    return navigator.clipboard.write([item]).catch(function () {
+      return navigator.clipboard.writeText(text);
+    });
+  } catch (e) {
+    return navigator.clipboard.writeText(text);
+  }
+} else if (navigator.clipboard && navigator.clipboard.writeText) {
+  return navigator.clipboard.writeText(text);
+} else {
+  return copyText(text);
+}
+}
+function handleQuickCopy() {
+if (!state.result) return;
+copyWithFormatting(state.result).then(function () {
+  if (btnQuickCopy) {
+    btnQuickCopy.classList.add('is-copied');
+    var iconDef = btnQuickCopy.querySelector('.copy-icon-default');
+    var iconChk = btnQuickCopy.querySelector('.copy-icon-checked');
+    if (iconDef) iconDef.hidden = true;
+    if (iconChk) iconChk.hidden = false;
+    if (quickCopyLabel) quickCopyLabel.textContent = 'Copied!';
+    setTimeout(function () {
+      btnQuickCopy.classList.remove('is-copied');
+      if (iconDef) iconDef.hidden = false;
+      if (iconChk) iconChk.hidden = true;
+      if (quickCopyLabel) quickCopyLabel.textContent = 'Copy with formatting';
+    }, 2400);
+  }
+  toast('Copied with formatting to clipboard!');
+  track('humanize_copy_formatted');
+}).catch(function () {
+  toast('Copied to clipboard.');
+});
+}
+if (btnQuickCopy) {
+btnQuickCopy.addEventListener('click', handleQuickCopy);
+}
 copyBtn.addEventListener('click', function () {
-copyText(state.result).then(function () {
+copyWithFormatting(state.result).then(function () {
 toast('Copied to clipboard');
 track('humanize_copy');
 }, function () {
@@ -847,6 +945,16 @@ updateInput();
 input.focus();
 track('humanize_sample');
 });
+if (btnSampleInline) {
+btnSampleInline.addEventListener('click', function () {
+input.value = SAMPLE;
+resetOutput();
+clearNotice();
+updateInput();
+input.focus();
+track('humanize_sample_inline');
+});
+}
 clearBtn.addEventListener('click', function () {
 input.value = '';
 resetOutput();

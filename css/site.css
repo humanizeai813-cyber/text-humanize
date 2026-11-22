@@ -417,3 +417,124 @@
 .tool-bar-sub .tool-history {
   margin-left: auto;
 }
+
+/* ==========================================================================
+   Frictionless Onboarding & One-Click Quick Actions
+   ========================================================================== */
+.btn-sample-highlight {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 9999px;
+  border: 1px solid var(--brand-soft-2);
+  background: var(--brand-soft);
+  color: var(--brand-ink);
+  font-size: 0.75rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease-in-out;
+}
+.btn-sample-highlight:hover {
+  background: #dbeafe;
+  border-color: var(--brand);
+  transform: translateY(-1px);
+}
+.sample-onboarding-hint {
+  padding: 6px 18px 4px;
+  font-size: 0.78125rem;
+  color: var(--muted);
+  border-top: 1px dashed var(--line);
+  background: #fbfdff;
+}
+.link-btn-inline {
+  padding: 0;
+  border: none;
+  background: none;
+  color: var(--brand);
+  font-weight: 600;
+  cursor: pointer;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.link-btn-inline:hover {
+  color: var(--brand-hover);
+}
+
+/* Output Quick Action Floating Bar */
+.output-quick-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px 12px;
+  padding: 8px 14px;
+  background: #f8fafc;
+  border-top: 1px solid var(--line);
+  animation: fadeInQuickBar 0.25s ease-out;
+}
+@keyframes fadeInQuickBar {
+  from { opacity: 0; transform: translateY(4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.quick-meta-chips {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+}
+.quick-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 9px;
+  border-radius: 9999px;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  font-size: 0.71875rem;
+  font-weight: 600;
+  color: var(--ink-2);
+}
+.chip-grade {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+.chip-icon {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+.quick-actions-btns {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+}
+.btn-quick-copy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 9999px;
+  background: var(--brand);
+  color: #ffffff;
+  border: 1px solid var(--brand);
+  font-size: 0.78125rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(35, 85, 232, 0.25);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-quick-copy:hover {
+  background: var(--brand-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 3px 8px rgba(35, 85, 232, 0.35);
+}
+.btn-quick-copy.is-copied {
+  background: #10b981 !important;
+  border-color: #059669 !important;
+  color: #ffffff !important;
+  transform: scale(1.03);
+}
