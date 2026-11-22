@@ -118,6 +118,21 @@
           <div class="pane-head">
             <h2 class="pane-title"><span class="pane-icon tint-mint"><svg class="icon" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M11 3c.6 4 2.6 6 6.5 6.5-3.9.5-5.9 2.5-6.5 6.5-.6-4-2.6-6-6.5-6.5C8.4 9 10.4 7 11 3z"/><path d="M18.5 14c.3 1.6 1 2.3 2.5 2.5-1.5.2-2.2.9-2.5 2.5-.3-1.6-1-2.3-2.5-2.5 1.5-.2 2.2-.9 2.5-2.5z"/></svg></span>Humanized text</h2>
             <div class="pane-actions">
+              <div class="diff-view-selector" id="diff-view-selector" hidden role="tablist" aria-label="Output view mode">
+                <button type="button" class="view-pill active" id="view-mode-clean" role="tab" aria-selected="true" title="Final clean text">
+                  <svg class="icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg>
+                  <span>Final</span>
+                </button>
+                <button type="button" class="view-pill" id="view-mode-diff" role="tab" aria-selected="false" title="Show inline changes">
+                  <svg class="icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span>Changes</span>
+                  <span class="diff-count-badge" id="diff-count-badge">0</span>
+                </button>
+                <button type="button" class="view-pill" id="view-mode-split" role="tab" aria-selected="false" title="Side-by-side comparison">
+                  <svg class="icon" viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M12 3v18"/></svg>
+                  <span>Side-by-side</span>
+                </button>
+              </div>
               <button type="button" class="link-btn" id="tool-compare" aria-pressed="false" hidden>Show changes</button>
               <button type="button" class="link-btn" id="tool-download" hidden>Download</button>
               <button type="button" class="btn btn-secondary btn-sm" id="tool-copy" hidden>Copy</button>

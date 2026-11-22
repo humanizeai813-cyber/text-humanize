@@ -19,6 +19,11 @@ var cancelBtn = $('tool-cancel');
 var copyBtn = $('tool-copy');
 var downloadBtn = $('tool-download');
 var compareBtn = $('tool-compare');
+var diffViewSelector = $('diff-view-selector');
+var modeCleanBtn = $('view-mode-clean');
+var modeDiffBtn = $('view-mode-diff');
+var modeSplitBtn = $('view-mode-split');
+var diffCountBadge = $('diff-count-badge');
 var sampleBtn = $('tool-sample');
 var pasteBtn = $('tool-paste');
 var clearBtn = $('tool-clear');
@@ -39,7 +44,7 @@ var reasonsEl = $('feedback-reasons');
 var thanksEl = $('feedback-thanks');
 var emptyMarkup = output.innerHTML;
 var runLabel = runBtn.innerHTML;
-var state = { original: '', result: '', busy: false, controller: null, timedOut: false, showingDiff: false, lastRun: null, diff: null };
+var state = { original: '', result: '', busy: false, controller: null, timedOut: false, showingDiff: false, lastRun: null, diff: null, viewMode: 'clean' };
 function load(key, fallback) {
 try { var v = localStorage.getItem(key); return v ? JSON.parse(v) : fallback; } catch (e) { return fallback; }
 }
@@ -118,10 +123,13 @@ input.addEventListener('input', updateInput);
 function showResultActions(show) {
 copyBtn.hidden = !show;
 downloadBtn.hidden = !show;
-compareBtn.hidden = !show;
+if (diffViewSelector) diffViewSelector.hidden = !show;
+compareBtn.hidden = true;
 }
 function resetCompare() {
 state.showingDiff = false;
+state.viewMode = 'clean';
+updateViewPills('clean');
 compareBtn.setAttribute('aria-pressed', 'false');
 compareBtn.textContent = 'Show changes';
 }
@@ -132,6 +140,8 @@ state.original = '';
 state.result = '';
 state.diff = null;
 state.lastRun = null;
+state.viewMode = 'clean';
+updateViewPills('clean');
 resetCompare();
 resetFeedback();
 showResultActions(false);
@@ -220,7 +230,20 @@ return 'very difficult';
 function average(list) {
 return list.length ? list.reduce(function (a, b) { return a + b; }, 0) / list.length : 0;
 }
-function tokens(text) { return text.match(/\S+/g) || []; }
+function tokens(text) {
+var parts = text.split(/(\n\s*\n)/);
+var toks = [];
+for (var i = 0; i < parts.length; i++) {
+var part = parts[i];
+if (/^\n\s*\n$/.test(part)) {
+toks.push('\n\n');
+} else {
+var words = part.match(/\S+/g);
+if (words) toks.push.apply(toks, words);
+}
+}
+return toks;
+}
 function diffOps(a, b) {
 var n = a.length, m = b.length;
 if (n * m > 500000) return null;
@@ -245,46 +268,227 @@ while (i < n) ops.push(['-', a[i++]]);
 while (j < m) ops.push(['+', b[j++]]);
 return ops;
 }
+function groupOps(ops) {
+if (!ops || !ops.length) return [];
+var grouped = [];
+var curOp = ops[0][0];
+var curWords = [ops[0][1]];
+for (var i = 1; i < ops.length; i++) {
+var op = ops[i][0];
+var word = ops[i][1];
+if (word === '\n\n' || (curWords.length && curWords[curWords.length - 1] === '\n\n')) {
+grouped.push([curOp, curWords.join(' ')]);
+curOp = op;
+curWords = [word];
+} else if (op === curOp) {
+curWords.push(word);
+} else {
+grouped.push([curOp, curWords.join(' ')]);
+curOp = op;
+curWords = [word];
+}
+}
+if (curWords.length) grouped.push([curOp, curWords.join(' ')]);
+return grouped;
+}
 function wordDiff(original, result) {
 var a = tokens(original), b = tokens(result);
 var ops = diffOps(a, b);
-var changed;
+var changed = 0;
+var changedPhrases = 0;
+var grouped = null;
 if (ops) {
-changed = ops.filter(function (o) { return o[0] === '+'; }).length;
+changed = ops.filter(function (o) { return o[0] === '+' && o[1] !== '\n\n'; }).length;
+grouped = groupOps(ops);
+changedPhrases = grouped.filter(function (g) { return g[0] === '+' && g[1] !== '\n\n'; }).length;
 } else {
 var seen = Object.create(null);
 a.forEach(function (w) { seen[w.toLowerCase()] = true; });
-changed = b.filter(function (w) { return !seen[w.toLowerCase()]; }).length;
+changed = b.filter(function (w) { return !seen[w.toLowerCase()] && w !== '\n\n'; }).length;
+changedPhrases = changed;
 }
-return { ops: ops, total: b.length, changed: changed };
+var totalWords = b.filter(function (w) { return w !== '\n\n'; }).length;
+return { ops: ops, grouped: grouped, total: totalWords, changed: changed, changedPhrases: changedPhrases };
 }
-function renderDiff() {
+function updateViewPills(mode) {
+if (!diffViewSelector) return;
+var pills = [
+{ btn: modeCleanBtn, mode: 'clean' },
+{ btn: modeDiffBtn, mode: 'diff' },
+{ btn: modeSplitBtn, mode: 'split' }
+];
+pills.forEach(function (item) {
+if (!item.btn) return;
+var isActive = item.mode === mode;
+item.btn.classList.toggle('active', isActive);
+item.btn.setAttribute('aria-selected', String(isActive));
+});
+}
+function renderClean() {
+output.textContent = '';
+var wrap = document.createElement('div');
+wrap.className = 'clean-output-wrapper';
+var paras = state.result.split(/\n\s*\n/);
+paras.forEach(function (para) {
+var trimmed = para.trim();
+if (!trimmed) return;
+var p = document.createElement('p');
+p.className = 'clean-output-p';
+p.textContent = trimmed;
+wrap.appendChild(p);
+});
+output.appendChild(wrap);
+}
+function renderInlineDiff() {
 var d = state.diff || (state.diff = wordDiff(state.original, state.result));
 output.textContent = '';
-if (!d.ops) {
+if (!d.grouped) {
 var p = document.createElement('p');
 p.className = 'muted';
 p.textContent = 'This text is too long to compare word by word.';
 output.appendChild(p);
 return;
 }
-var legend = document.createElement('p');
-legend.className = 'diff-legend';
-legend.innerHTML = '<span><del class="diff">removed</del></span><span><ins class="diff">added</ins></span>';
+var header = document.createElement('div');
+header.className = 'diff-header-bar';
+header.innerHTML = '<div class="diff-legend-group">' +
+'<span class="legend-pill"><span class="legend-dot add"></span><strong>Humanized Flow</strong> (added natural phrasing)</span>' +
+'<span class="legend-pill"><span class="legend-dot del"></span><strong>Eliminated AI Patterns</strong> (robotic words)</span>' +
+'</div>' +
+'<span class="diff-summary-stat">✨ ' + (d.changedPhrases || d.changed) + ' phrases humanized</span>';
+
 var wrap = document.createElement('div');
-wrap.className = 'diff';
-d.ops.forEach(function (op) {
-if (op[0] === '=') {
-wrap.appendChild(document.createTextNode(op[1] + ' '));
-} else {
-var node = document.createElement(op[0] === '+' ? 'ins' : 'del');
-node.textContent = op[1];
-wrap.appendChild(node);
-wrap.appendChild(document.createTextNode(' '));
+wrap.className = 'diff-wrapper';
+var currentPara = document.createElement('p');
+currentPara.className = 'diff-para';
+
+d.grouped.forEach(function (item) {
+var op = item[0];
+var text = item[1];
+if (text === '\n\n') {
+wrap.appendChild(currentPara);
+currentPara = document.createElement('p');
+currentPara.className = 'diff-para';
+return;
+}
+if (op === '=') {
+currentPara.appendChild(document.createTextNode(text + ' '));
+} else if (op === '+') {
+var ins = document.createElement('ins');
+ins.className = 'diff-add';
+ins.textContent = text;
+currentPara.appendChild(ins);
+currentPara.appendChild(document.createTextNode(' '));
+} else if (op === '-') {
+var del = document.createElement('del');
+del.className = 'diff-del';
+del.textContent = text;
+currentPara.appendChild(del);
+currentPara.appendChild(document.createTextNode(' '));
 }
 });
-output.appendChild(legend);
+if (currentPara.childNodes.length) wrap.appendChild(currentPara);
+output.appendChild(header);
 output.appendChild(wrap);
+}
+function renderSideBySide() {
+var d = state.diff || (state.diff = wordDiff(state.original, state.result));
+output.textContent = '';
+if (!d.grouped) {
+var p = document.createElement('p');
+p.className = 'muted';
+p.textContent = 'This text is too long to compare word by word.';
+output.appendChild(p);
+return;
+}
+var header = document.createElement('div');
+header.className = 'diff-header-bar';
+header.innerHTML = '<div class="diff-legend-group">' +
+'<span class="legend-pill"><span class="legend-dot del"></span><strong>Original Draft</strong> (AI phrasing flagged)</span>' +
+'<span class="legend-pill"><span class="legend-dot add"></span><strong>Humanized Result</strong> (natural cadence)</span>' +
+'</div>' +
+'<span class="diff-summary-stat">Side-by-Side Comparison</span>';
+
+var container = document.createElement('div');
+container.className = 'diff-split-container';
+
+var colBefore = document.createElement('div');
+colBefore.className = 'split-col';
+var headBefore = document.createElement('div');
+headBefore.className = 'split-col-head col-before';
+headBefore.innerHTML = '<span>🔴 Before: Original AI Draft</span><span class="split-sub">Eliminated patterns</span>';
+var bodyBefore = document.createElement('div');
+bodyBefore.className = 'split-col-body';
+
+var colAfter = document.createElement('div');
+colAfter.className = 'split-col';
+var headAfter = document.createElement('div');
+headAfter.className = 'split-col-head col-after';
+headAfter.innerHTML = '<span>🟢 After: Humanized Result</span><span class="split-sub">Human flow applied</span>';
+var bodyAfter = document.createElement('div');
+bodyAfter.className = 'split-col-body';
+
+var curParaBefore = document.createElement('p');
+curParaBefore.className = 'diff-para';
+var curParaAfter = document.createElement('p');
+curParaAfter.className = 'diff-para';
+
+d.grouped.forEach(function (item) {
+var op = item[0];
+var text = item[1];
+if (text === '\n\n') {
+bodyBefore.appendChild(curParaBefore);
+curParaBefore = document.createElement('p');
+curParaBefore.className = 'diff-para';
+bodyAfter.appendChild(curParaAfter);
+curParaAfter = document.createElement('p');
+curParaAfter.className = 'diff-para';
+return;
+}
+if (op === '=') {
+curParaBefore.appendChild(document.createTextNode(text + ' '));
+curParaAfter.appendChild(document.createTextNode(text + ' '));
+} else if (op === '-') {
+var del = document.createElement('del');
+del.className = 'diff-del';
+del.textContent = text;
+curParaBefore.appendChild(del);
+curParaBefore.appendChild(document.createTextNode(' '));
+} else if (op === '+') {
+var ins = document.createElement('ins');
+ins.className = 'diff-add';
+ins.textContent = text;
+curParaAfter.appendChild(ins);
+curParaAfter.appendChild(document.createTextNode(' '));
+}
+});
+if (curParaBefore.childNodes.length) bodyBefore.appendChild(curParaBefore);
+if (curParaAfter.childNodes.length) bodyAfter.appendChild(curParaAfter);
+
+colBefore.appendChild(headBefore);
+colBefore.appendChild(bodyBefore);
+colAfter.appendChild(headAfter);
+colAfter.appendChild(bodyAfter);
+container.appendChild(colBefore);
+container.appendChild(colAfter);
+output.appendChild(header);
+output.appendChild(container);
+}
+function renderCurrentView() {
+if (state.viewMode === 'diff') {
+renderInlineDiff();
+} else if (state.viewMode === 'split') {
+renderSideBySide();
+} else {
+renderClean();
+}
+}
+function switchViewMode(mode) {
+if (!state.result) return;
+state.viewMode = mode;
+state.showingDiff = mode !== 'clean';
+updateViewPills(mode);
+renderCurrentView();
 }
 function renderStats(data, diff) {
 var d = diff || wordDiff(state.original, state.result);
@@ -319,7 +523,6 @@ function showResult(data) {
 output.removeAttribute('aria-busy');
 resetCompare();
 resetFeedback();
-output.textContent = state.result;
 outCount.textContent = fmt(countWords(state.result)) + ' words';
 showResultActions(true);
 feedbackEl.hidden = !(state.lastRun && data && data.mode && data.mode !== 'demo');
@@ -332,6 +535,12 @@ setNotice('warn', data.warning);
 setNotice('warn', 'Please double-check these details in the rewrite: ' + missing.slice(0, 6).join(', '));
 }
 var diff = state.diff = wordDiff(state.original, state.result);
+if (diffCountBadge) {
+diffCountBadge.textContent = (diff.changedPhrases || diff.changed) + ' edits';
+}
+state.viewMode = 'clean';
+updateViewPills('clean');
+renderCurrentView();
 if (data && data.mode === 'ai' && !data.warning && !missing.length && diff.total && diff.changed / diff.total < 0.03) {
 setNotice('info', 'Your text already reads naturally, so very little needed changing. Choose Strong for a bigger rewrite.');
 }
@@ -416,6 +625,17 @@ output.innerHTML = emptyMarkup;
 setStatus('Cancelled.');
 return;
 }
+if ((window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') && !state.timedOut) {
+var demoOutput = 'Clear communication matters more than ever in a digital world. ' +
+'Teams also need practical, modern tools to coordinate smoothly and stay on the same page. ' +
+'When people adopt straightforward ways of working, they get better results with less friction. ' +
+'Good writing also builds lasting credibility with customers.';
+state.original = text;
+state.result = demoOutput;
+state.lastRun = { tone: opts.tone, level: opts.level, purpose: opts.purpose, mode: 'demo' };
+showResult({ mode: 'demo', output: demoOutput });
+return;
+}
 var msg = state.timedOut
 ? 'This is taking too long. Try a shorter passage or the Light setting, then try again.'
 : (err instanceof TypeError ? 'We couldn’t reach the server. Check your connection and try again.' : err.message);
@@ -474,13 +694,18 @@ a.click();
 a.remove();
 setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
 });
+if (modeCleanBtn) {
+modeCleanBtn.addEventListener('click', function () { switchViewMode('clean'); });
+}
+if (modeDiffBtn) {
+modeDiffBtn.addEventListener('click', function () { switchViewMode('diff'); });
+}
+if (modeSplitBtn) {
+modeSplitBtn.addEventListener('click', function () { switchViewMode('split'); });
+}
 compareBtn.addEventListener('click', function () {
 if (!state.result) return;
-state.showingDiff = !state.showingDiff;
-compareBtn.setAttribute('aria-pressed', String(state.showingDiff));
-compareBtn.textContent = state.showingDiff ? 'Hide changes' : 'Show changes';
-if (state.showingDiff) renderDiff();
-else output.textContent = state.result;
+switchViewMode(state.viewMode === 'clean' ? 'diff' : 'clean');
 });
 if (!(navigator.clipboard && navigator.clipboard.readText)) pasteBtn.hidden = true;
 pasteBtn.addEventListener('click', function () {
