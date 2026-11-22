@@ -1,0 +1,42 @@
+# Text Humanize
+
+> Text Humanize is a free web-based AI writing editor. It rewrites AI-assisted drafts so they read more naturally (varied sentence rhythm, less filler, plainer wording) while protecting numbers, names, links and citations. It also offers an AI writing-pattern checker and practical writing guides. No account is required.
+
+Text Humanize does not guarantee any AI-detector outcome and is not designed to evade detection. Users are responsible for following academic and workplace rules on AI use.
+
+## Tools
+- [AI Humanizer](https://text-humanize.com/): rewrite text in five tones (Natural, Casual, Professional, Academic, Creative) with light, balanced or strong changes; up to 10,000 characters per request; word-level change comparison.
+- [AI Detector](https://text-humanize.com/ai-detector): estimates how AI-like a text reads by combining writing-pattern checks with an open-source AI-detection model, and explains each signal. Scores are estimates, not proof of authorship.
+- [How it works](https://text-humanize.com/how-it-works): technical explanation of the rewriting pipeline and its limitations.
+
+## Guides
+- [All guides](https://text-humanize.com/blog/): every guide, grouped by topic, including new posts.
+- [How to edit AI-generated writing](https://text-humanize.com/blog/how-to-edit-ai-writing)
+- [12 signs writing sounds like AI](https://text-humanize.com/blog/common-ai-writing-patterns)
+- [How to make ChatGPT sound more human](https://text-humanize.com/blog/how-to-make-chatgpt-sound-more-human)
+- [How to use AI to write a cover letter that doesn't sound generic](https://text-humanize.com/blog/how-to-use-ai-for-cover-letters)
+- [How to improve readability](https://text-humanize.com/blog/how-to-improve-readability)
+- [How to write a professional email](https://text-humanize.com/blog/how-to-write-professional-emails)
+- [Active vs passive voice](https://text-humanize.com/blog/active-vs-passive-voice)
+- [Transition words: how to use them without overdoing it](https://text-humanize.com/blog/transition-words-guide)
+- [How to write an argumentative essay](https://text-humanize.com/blog/how-to-write-argumentative-essay)
+- [How AI detection works](https://text-humanize.com/blog/how-ai-detection-works)
+- [AI detector false positives](https://text-humanize.com/blog/ai-detector-false-positives)
+- [Using AI writing tools responsibly: a student guide](https://text-humanize.com/blog/responsible-ai-use-for-students)
+- [How to cite ChatGPT and other AI tools](https://text-humanize.com/blog/how-to-cite-ai-generated-content)
+- [How to paraphrase properly without plagiarizing](https://text-humanize.com/blog/how-to-paraphrase-properly)
+
+## About
+- [About Text Humanize](https://text-humanize.com/about)
+- [Editorial policy](https://text-humanize.com/about#editorial-policy): how guides are written, reviewed and corrected.
+- [Contact](https://text-humanize.com/contact)
+
+## Policies
+- [Responsible use policy](https://text-humanize.com/responsible-use)
+- [Privacy policy](https://text-humanize.com/privacy): submitted text is processed by an AI provider to produce results, cached for up to one hour, and not sold or published.
+- [Terms of use](https://text-humanize.com/terms)
+- [FAQ](https://text-humanize.com/faq)
+
+## Feeds
+- [Sitemap](https://text-humanize.com/sitemap.xml)
+- [Guides RSS feed](https://text-humanize.com/blog/feed.xml)

@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+Disallow: /api
+Disallow: /api/
+Disallow: /src
+Disallow: /src/
+Disallow: /storage
+Disallow: /storage/
+Disallow: /admin
+Disallow: /admin/
+Disallow: /cms
+Disallow: /cms/
+Disallow: /*.bak*
+Disallow: /*@@*
+
+Sitemap: https://text-humanize.com/sitemap.xml

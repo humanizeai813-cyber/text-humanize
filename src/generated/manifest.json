@@ -1,0 +1,213 @@
+{
+  "builtAt": "2026-10-09T08:10:03.920Z",
+  "site": {
+    "name": "Text Humanize",
+    "url": "https://text-humanize.com",
+    "email": "hello@text-humanize.com",
+    "editorialTeam": "Text Humanize Editorial Team"
+  },
+  "categories": [
+    {
+      "name": "Editing AI drafts",
+      "slug": "editing-ai-drafts",
+      "tint": "tint-sky",
+      "blurb": "Turn generic AI output into writing that sounds like you."
+    },
+    {
+      "name": "Writing better",
+      "slug": "writing-better",
+      "tint": "tint-mint",
+      "blurb": "Everyday techniques for clearer sentences, emails and essays."
+    },
+    {
+      "name": "AI detectors",
+      "slug": "ai-detectors",
+      "tint": "tint-amber",
+      "blurb": "How detection tools work, where they go wrong and what to do about it."
+    },
+    {
+      "name": "Responsible AI use",
+      "slug": "responsible-ai-use",
+      "tint": "tint-rose",
+      "blurb": "Disclosing, citing and paraphrasing the right way."
+    }
+  ],
+  "guides": [
+    {
+      "slug": "best-ai-humanizers",
+      "h1": "7 best AI humanizer tools in 2026",
+      "short": "7 humanizer tools compared",
+      "description": "Seven AI humanizer tools compared on price, word limits and free trials: Undetectable.ai, WriteHuman, HIX Bypass, Smodin, Walter Writes, QuillBot and Text Humanize.",
+      "excerpt": "Prices, word limits and free trials for seven AI humanizer tools, read from each vendor's own pricing page.",
+      "category": "Editing AI drafts",
+      "date": "2026-10-09",
+      "updated": "2026-10-09",
+      "minutes": 8
+    },
+    {
+      "slug": "is-undetectable-ai-legit",
+      "h1": "Is Undetectable.ai legit?",
+      "short": "Is Undetectable.ai legit?",
+      "description": "Is Undetectable.ai legit? We check who runs the service, what its humanizer actually delivers, how the free trial works, and whether it's worth paying for.",
+      "excerpt": "Who runs Undetectable.ai, what its humanizer really delivers, how the free trial works, and an honest verdict.",
+      "category": "Editing AI drafts",
+      "date": "2026-10-09",
+      "updated": "2026-10-09",
+      "minutes": 6
+    },
+    {
+      "slug": "active-vs-passive-voice",
+      "h1": "Active vs passive voice: examples and when to use each",
+      "short": "Active vs passive voice",
+      "description": "The difference between active and passive voice, with clear examples, how to spot passive sentences, and when the passive is actually the better choice.",
+      "excerpt": "How to spot passive sentences, when to rewrite them, and when the passive voice is the right choice.",
+      "category": "Writing better",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "ai-detector-false-positives",
+      "h1": "AI detector false positives: why they happen and what to do",
+      "short": "AI detector false positives",
+      "description": "Why AI detectors flag human writing, who is most at risk, how to protect yourself with good writing habits, and what to do if your work is wrongly flagged.",
+      "excerpt": "Why human writing gets flagged, who’s most affected, and a calm, practical plan if it happens to you.",
+      "category": "AI detectors",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "common-ai-writing-patterns",
+      "h1": "12 signs writing sounds like AI, and how to fix each one",
+      "short": "12 signs of AI writing",
+      "description": "Uniform sentences, stacked transitions, empty intros and buzzwords: 12 patterns that make writing sound AI-generated, with a before-and-after fix for each.",
+      "excerpt": "The patterns readers notice in AI-generated text, with before-and-after examples showing how to fix every one.",
+      "category": "Editing AI drafts",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 5
+    },
+    {
+      "slug": "how-to-cite-ai-generated-content",
+      "h1": "How to cite ChatGPT and other AI tools",
+      "short": "Citing AI tools",
+      "description": "How to cite ChatGPT and other AI tools in APA, MLA and Chicago style, when a citation is needed, what to record, and why you still need real sources.",
+      "excerpt": "When a citation is needed, what to include in APA, MLA and Chicago style, and how to disclose what the tool did.",
+      "category": "Responsible AI use",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 5
+    },
+    {
+      "slug": "how-to-edit-ai-writing",
+      "h1": "How to edit AI-generated writing: a practical checklist",
+      "short": "Editing AI writing",
+      "description": "A step-by-step checklist for editing AI-generated drafts: verify facts, cut filler, restore your own voice, fix sentence rhythm, and know when to start over.",
+      "excerpt": "A five-pass editing routine that turns a generic AI draft into something accurate, specific and worth reading.",
+      "category": "Editing AI drafts",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 5
+    },
+    {
+      "slug": "how-to-improve-readability",
+      "h1": "How to improve readability: 10 techniques that work",
+      "short": "Improve readability",
+      "description": "Ten practical techniques to make any text easier to read, from plain words and shorter sentences to clearer structure, plus how readability scores are calculated.",
+      "excerpt": "Plain words, clear structure and sentences that vary in length. How readability works and how to improve it.",
+      "category": "Writing better",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "how-to-paraphrase-properly",
+      "h1": "How to paraphrase properly without plagiarizing",
+      "short": "Paraphrasing properly",
+      "description": "How to paraphrase a source properly: understand it, rewrite it in your own words and structure, cite it, and avoid patchwriting, with worked examples.",
+      "excerpt": "Understand, rewrite, compare and cite: a reliable method, with examples of weak and strong paraphrases.",
+      "category": "Responsible AI use",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "how-to-use-ai-for-cover-letters",
+      "h1": "How to use AI to write a cover letter that doesn’t sound generic",
+      "short": "AI cover letters",
+      "description": "Use AI to draft a cover letter without sounding generic: what to give the tool, a prompt you can adapt, how to add real evidence and a final checklist.",
+      "excerpt": "Give the AI real material, then edit in specifics so your letter sounds like a person who wants this particular job.",
+      "category": "Editing AI drafts",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "how-to-write-professional-emails",
+      "h1": "How to write a professional email people actually read",
+      "short": "Professional emails",
+      "description": "How to write clear professional emails: subject lines that get opened, a simple structure, the right tone, polite follow-ups and before-and-after examples.",
+      "excerpt": "Subject lines, structure, tone and follow-ups, with before-and-after examples you can adapt.",
+      "category": "Writing better",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "responsible-ai-use-for-students",
+      "h1": "Using AI writing tools responsibly: a guide for students",
+      "short": "Responsible AI for students",
+      "description": "How students can use AI writing tools within academic integrity rules: finding your policy, lower-risk uses, disclosure, citing AI and keeping records.",
+      "excerpt": "How to find your school’s rules, which uses are usually fine, how to disclose and cite AI, and why your drafts matter.",
+      "category": "Responsible AI use",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "transition-words-guide",
+      "h1": "Transition words: how to use them without overdoing it",
+      "short": "Transition words",
+      "description": "A practical guide to transition words: what each type does, plain alternatives, punctuation rules and how to stop stacking 'furthermore' and 'moreover'.",
+      "excerpt": "What each kind of transition does, plainer alternatives, and how to stop stacking “furthermore” and “moreover”.",
+      "category": "Writing better",
+      "date": "2026-09-13",
+      "updated": "2026-09-13",
+      "minutes": 3
+    },
+    {
+      "slug": "how-to-make-chatgpt-sound-more-human",
+      "h1": "How to make ChatGPT sound more human",
+      "short": "Make ChatGPT sound human",
+      "description": "How to humanize ChatGPT output: give it real context, share a style sample, describe your voice precisely, ban filler and edit the result.",
+      "excerpt": "Better context, a style sample and a few precise instructions go a long way. Then a quick edit finishes the job.",
+      "category": "Editing AI drafts",
+      "date": "2026-06-02",
+      "updated": "2026-10-09",
+      "minutes": 4
+    },
+    {
+      "slug": "how-to-write-argumentative-essay",
+      "h1": "How to write an argumentative essay: a step-by-step guide",
+      "short": "Argumentative essays",
+      "description": "How to write an argumentative essay: choose a debatable claim, write a strong thesis, structure your evidence, answer counterarguments and revise with confidence.",
+      "excerpt": "From a debatable claim to a finished draft: thesis examples, structure, counterarguments and a revision checklist.",
+      "category": "Writing better",
+      "date": "2026-05-23",
+      "updated": "2026-09-13",
+      "minutes": 4
+    },
+    {
+      "slug": "how-ai-detection-works",
+      "h1": "How AI detection works, and why a score isn’t proof",
+      "short": "How AI detection works",
+      "description": "How AI text detectors estimate whether writing is machine-generated: perplexity, burstiness, classifiers and watermarks, and why scores aren't proof.",
+      "excerpt": "Perplexity, burstiness, trained classifiers and watermarks explained — what each detection method measures.",
+      "category": "AI detectors",
+      "date": "2026-04-28",
+      "updated": "2026-09-22",
+      "minutes": 3
+    }
+  ]
+}

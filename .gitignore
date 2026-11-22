@@ -1,0 +1,10 @@
+# Environment & Secrets
+.env
+.env.local
+
+# Backups
+*.bak*
+
+# OS Files
+.DS_Store
+Thumbs.db
